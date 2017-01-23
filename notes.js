@@ -42,8 +42,16 @@ var getAll = () => {
   // return 
 }
 
-var readNote = (title) => {
-  console.log('reading note - ', title);
+var getNote = (title) => {
+  // scroll thru array of notes and find matching title (filter matching title
+  var notes = fetchNotes();
+  var filteredNotes = notes.filter((note) => note.title === title);
+  // return filteredNotes[0];
+  // return note if found
+  // console.log('reading note - ', filteredNotes);
+  var result = filteredNotes[0] ? filteredNotes[0] : 'note not found';
+  // console.log('result - ', result);
+  return result;
 };
 
 var removeNote = (title) => {
@@ -61,6 +69,6 @@ var removeNote = (title) => {
 module.exports = {
   addNote,
   getAll,
-  readNote,
+  getNote,
   removeNote
 }
