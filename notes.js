@@ -47,7 +47,15 @@ var readNote = (title) => {
 };
 
 var removeNote = (title) => {
-  console.log('removing note - ', title);
+  // fetch the notes
+  var fetchedNotes = fetchNotes();
+
+  // filter out the notes - removing the one w/ title of argv (go thru all, and find one)
+  var postFilteredNotes = fetchedNotes.filter((note) => note.title !== title);
+  // save new notes array
+  saveNotes(postFilteredNotes);
+
+  return fetchedNotes.length !== postFilteredNotes.length;
 }
 
 module.exports = {
