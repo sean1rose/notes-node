@@ -17,7 +17,12 @@ console.log('yargs - ', argv);
 
 if (command === 'add') {
   // console.log('Adding new note');
-  notes.addNote(argv.title, argv.body);
+  var note = notes.addNote(argv.title, argv.body);
+  if (note) {
+    console.log(`note title is ${note.title} while the body is ${note.body}`);
+  } else {
+    console.log('note title is a dupe, not added');
+  }
 } else if (command === 'list') {
   notes.getAll();
 

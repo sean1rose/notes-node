@@ -1,30 +1,39 @@
 const fs = require('fs');
 
-var addNote = (title, body) => {
-  var notes = [];
-  var note = {
-    title,
-    body
-  };
-
+// fetch from file sys
+var fetchNotes = () => {
   // so long as file exists...
   try {
     // string version, still need to parse
     var notesString = fs.readFileSync('notes-data.json')
     // replace notes 
-    notes = JSON.parse(notesString);
+   return JSON.parse(notesString);
   } catch (e) {
     // if file does not exist
-
+    return [];
   }
+};
 
+// save to array notes
+var saveNotes = (notes) => {
+  fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+};
+
+var addNote = (title, body) => {
+  var notes = fetchNotes();
+  var note = {
+    title,
+    body
+  };
   // array of dupes
   var duplicateNotes = notes.filter((note) => note.title === title);
-
+  
+  // if no dupes -> save
   if (duplicateNotes.length === 0){
     notes.push(note);
     // createa file, w/ json'ified notes array
-    fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+    saveNotes(notes);
+    return note;
   }
 };
 
